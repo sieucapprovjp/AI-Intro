@@ -15,7 +15,7 @@ from ..config import (
 from ..utils.geo import haversine_distance
 
 
-def json_safe_node_id(node_id):
+def json_safe_node_id(node_id): 
     if isinstance(node_id, np.integer):
         return int(node_id)
     return node_id

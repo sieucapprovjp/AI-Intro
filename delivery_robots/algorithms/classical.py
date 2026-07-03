@@ -9,10 +9,10 @@ def _edge_length(graph, from_node, to_node):
     edge_data = graph[from_node][to_node]
     if "length" in edge_data:
         return float(edge_data.get("length", 1.0))
-    return min(float(d.get("length", 1.0)) for d in edge_data.values())
+    return min(float(d.get("length", 1.0)) for d in edge_data.values()) 
 
 
-def _reconstruct_path(came_from, current):
+def _reconstruct_path(came_from, current): # truy vet 
     path = [current]
     while current in came_from:
         current = came_from[current]
@@ -32,8 +32,8 @@ def _path_cost(graph, path):
 
 def run_dijkstra(graph, start_node, end_node):
     started = time.time()
-    open_set = [(0.0, start_node)]
-    dist = {start_node: 0.0}
+    open_set = [(0.0, start_node)] #priority_queue -> distmin start -> current
+    dist = {start_node: 0.0} 
     came_from = {}
     visited = set()
     nodes_explored = 0
@@ -46,7 +46,7 @@ def run_dijkstra(graph, start_node, end_node):
         nodes_explored += 1
 
         if current == end_node:
-            path = _reconstruct_path(came_from, current)
+            path = _reconstruct_path(came_from, current) # trace 
             return {
                 "found": True,
                 "path": path,
@@ -55,9 +55,10 @@ def run_dijkstra(graph, start_node, end_node):
                 "nodesExplored": nodes_explored,
                 "timeMs": round((time.time() - started) * 1000, 2),
                 "expectedOptimal": True,
+                # FE
             }
 
-        for neighbor in graph.neighbors(current):
+        for neighbor in graph.neighbors(current): 
             if neighbor in visited:
                 continue
             next_dist = dist[current] + _edge_length(graph, current, neighbor)
